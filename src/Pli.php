@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of cocur/pli.
+ *
+ * (c) Florian Eckerstorfer <florian@eckerstorfer.co>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Cocur\Pli;
 
 use Cocur\Pli\Container\ExtensionInterface;
