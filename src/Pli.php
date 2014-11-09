@@ -65,20 +65,16 @@ class Pli
     }
 
     /**
-     * @param string             $commandDirectory
-     * @param ContainerInterface $container
+     * @param ContainerBuilder $container
      *
      * @return Application
      */
-    public function getApplication($commandDirectory, ContainerInterface $container = null)
+    public function getApplication(ContainerBuilder $container)
     {
         $application = new Application();
 
-        $finder = (new Finder())->files()->in($commandDirectory)->name('*Command.php');
-        /** @var SplFileInfo $commandFile */
-        foreach ($finder as $commandFile) {
-            $className = $commandFile->getBasename('.php');
-            $command = new $className();
+        $commands = $container->findTaggedServiceIds('command');
+        foreach ($commands as $command) {
             $application->add($command);
             if ($command instanceof ContainerAwareInterface) {
                 $command->setContainer($container);
