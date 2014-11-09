@@ -73,8 +73,9 @@ class Pli
     {
         $application = new Application();
 
-        $commands = $container->findTaggedServiceIds('command');
-        foreach ($commands as $command) {
+        $commands = array_keys($container->findTaggedServiceIds('command'));
+        foreach ($commands as $id) {
+            $command = $container->get($id);
             $application->add($command);
             if ($command instanceof ContainerAwareInterface) {
                 $command->setContainer($container);
