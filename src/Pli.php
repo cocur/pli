@@ -8,9 +8,6 @@ use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -75,6 +72,7 @@ class Pli
 
         $commands = array_keys($container->findTaggedServiceIds('command'));
         foreach ($commands as $id) {
+            /** @var \Symfony\Component\Console\Command\Command|ContainerAwareInterface $command */
             $command = $container->get($id);
             $application->add($command);
             if ($command instanceof ContainerAwareInterface) {
