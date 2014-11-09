@@ -1,8 +1,7 @@
 <?php
 
-namespace Pli;
+namespace Cocur\Pli;
 
-use Cocur\Pli\ExtensionInterface;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Console\Application;

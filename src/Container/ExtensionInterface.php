@@ -1,6 +1,6 @@
 <?php
 
-namespace Cocur\Pli;
+namespace Cocur\Pli\Container;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
