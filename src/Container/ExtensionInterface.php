@@ -20,4 +20,11 @@ interface ExtensionInterface
      * @return void
      */
     public function buildContainer(ContainerBuilder $container, array $config = []);
+
+    /**
+     * @param string $configDirectory
+     *
+     * @return void
+     */
+    public function setConfigDirectory($configDirectory);
 }

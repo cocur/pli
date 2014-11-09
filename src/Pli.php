@@ -22,6 +22,14 @@ use Symfony\Component\Yaml\Yaml;
  */
 class Pli
 {
+    /** @var string */
+    private $configDirectory;
+
+    public function __construct($configDirectory)
+    {
+        $this->configDirectory = $configDirectory;
+    }
+
     /**
      * @param ConfigurationInterface $configuration
      * @param string[]               $configFiles
@@ -32,7 +40,8 @@ class Pli
     {
         $rawConfig = [];
         foreach ($configFiles as $configFile) {
-            $rawConfig[] = Yaml::parse($configFile);
+            $configFile = file_exists($configFile) ? $configFile : sprintf('%s/%s', $this->configDirectory, $configFile);
+            $rawConfig[] = Yaml::parse(file_get_contents($configFile));
         }
 
         return (new Processor())->processConfiguration($configuration, $rawConfig);
@@ -48,6 +57,7 @@ class Pli
     {
         $container = new ContainerBuilder();
         if ($extension) {
+            $extension->setConfigDirectory($this->configDirectory);
             $extension->buildContainer($container, $config);
         }
 
