@@ -48,7 +48,7 @@ $application = $pli->getApplication($container);
 $application->run();
 ```
 
-```
+```php
 // src/AcmeConfiguration.php
 
 <?php
