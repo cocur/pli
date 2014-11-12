@@ -5,6 +5,10 @@ Pli
 [Console](https://github.com/symfony/Console), [DependencyInjection](https://github.com/symfony/DependencyInjection)
 and [Config](https://github.com/symfony/Config) components.
 
+[![Build Status](https://travis-ci.org/cocur/pli.svg?branch=master)](https://travis-ci.org/cocur/pli)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cocur/pli/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cocur/pli/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/cocur/pli/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/cocur/pli/?branch=master)
+
 The Symfony components are incredible powerful, but the price for this flexibility is quite a bit of bootstrapping code
 to set the components up. Especially when integrating Console, DependencyInjection and Config a developer has to
 copy and adapt a lot of code from the docs. **Pli** uses some assumptions (such as config files in Yaml format) to
