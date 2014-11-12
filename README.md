@@ -22,6 +22,9 @@ You can install Pli using [Composer](http://getcomposer.org).
 $ composer require cocur/pli:@stable
 ```
 
+*__Tip:__ Instead of using `@stable` use a more specific version from the 
+[releases](https://github.com/cocur/pli/releases) page.*
+
 
 Usage
 -----
@@ -107,3 +110,6 @@ Changelog
 
 License
 -------
+
+The MIT license applies to cocur/pli. For the full copyright and license information, please view the
+`LICENSE` file distributed with this source code.
