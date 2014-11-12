@@ -46,7 +46,9 @@ class Pli
     {
         $rawConfig = [];
         foreach ($configFiles as $configFile) {
-            $configFile = file_exists($configFile) ? $configFile : sprintf('%s/%s', $this->configDirectory, $configFile);
+            if (false === file_exists($configFile)) {
+                $configFile = sprintf('%s/%s', $this->configDirectory, $configFile);
+            }
             $rawConfig[] = Yaml::parse(file_get_contents($configFile));
         }
 
@@ -54,15 +56,15 @@ class Pli
     }
 
     /**
-     * @param ExtensionInterface $extension
-     * @param array              $config
+     * @param ExtensionInterface|null $extension
+     * @param array                   $config
      *
      * @return ContainerBuilder
      */
     public function buildContainer(ExtensionInterface $extension = null, array $config = [])
     {
         $container = new ContainerBuilder();
-        if ($extension) {
+        if ($extension !== null) {
             $extension->setConfigDirectory($this->configDirectory);
             $extension->buildContainer($container, $config);
         }
