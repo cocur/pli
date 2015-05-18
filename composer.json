@@ -1,6 +1,7 @@
 {
     "name":        "cocur/pli",
     "description": "Pli is a library and set of conventions to bootstrap Console applications with Symfony Console, DependencyInjection and Config components.",
+    "license":     "MIT",
     "require":     {
         "symfony/console":              "~2.5",
         "symfony/config":               "~2.5",
