@@ -4,19 +4,21 @@ namespace Cocur\Pli;
 
 use \Mockery as m;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamFile;
+use PHPUnit_Framework_TestCase;
 
 /**
  * PliTest
  *
  * @package   Cocur\Pli
  * @author    Florian Eckerstorfer <florian@eckerstorfer.co>
- * @copyright 2014 Florian Eckerstorfer
+ * @copyright 2014-2015 Florian Eckerstorfer
  * @group     unit
  */
-class PliTest extends \PHPUnit_Framework_TestCase
+class PliTest extends PHPUnit_Framework_TestCase
 {
-    /** @var \org\bovigo\vfs\vfsStreamDirectory */
+    /** @var vfsStreamDirectory */
     private $configDir;
 
     /** @var Pli */
@@ -76,6 +78,7 @@ class PliTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers Cocur\Pli\Pli::getApplication()
+     * @covers Cocur\Pli\Pli::addCommands()
      */
     public function getApplicationShouldCreateApplicationAndAddCommands()
     {

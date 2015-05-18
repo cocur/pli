@@ -24,13 +24,18 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @package   Pli
  * @author    Florian Eckerstorfer <florian@eckerstorfer.co>
- * @copyright 2014 Florian Eckerstorfer
+ * @copyright 2014-2015 Florian Eckerstorfer
  */
 class Pli
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $configDirectory;
 
+    /**
+     * @param string $configDirectory
+     */
     public function __construct($configDirectory)
     {
         $this->configDirectory = $configDirectory;
@@ -79,8 +84,17 @@ class Pli
      */
     public function getApplication(ContainerBuilder $container)
     {
-        $application = new Application();
+        return $this->addCommands(new Application(), $container);
+    }
 
+    /**
+     * @param Application      $application
+     * @param ContainerBuilder $container
+     *
+     * @return Application
+     */
+    protected function addCommands(Application $application, ContainerBuilder $container)
+    {
         $commands = array_keys($container->findTaggedServiceIds('command'));
         foreach ($commands as $id) {
             /** @var \Symfony\Component\Console\Command\Command|ContainerAwareInterface $command */

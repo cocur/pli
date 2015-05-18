@@ -1,10 +1,11 @@
 Pli
 ===
 
-> Pli is a library and set of conventions to bootstrap the integration of the Symfony
+> Pli is a library and set of conventions to bootstrap Console applications with Symfony
 [Console](https://github.com/symfony/Console), [DependencyInjection](https://github.com/symfony/DependencyInjection)
 and [Config](https://github.com/symfony/Config) components.
 
+[![Latest Version](https://img.shields.io/packagist/v/cocur/pli.svg)](https://packagist.org/packages/cocur/pli)
 [![Build Status](https://travis-ci.org/cocur/pli.svg?branch=master)](https://travis-ci.org/cocur/pli)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cocur/pli/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cocur/pli/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/cocur/pli/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/cocur/pli/?branch=master)
@@ -23,11 +24,8 @@ Installation
 You can install Pli using [Composer](http://getcomposer.org).
 
 ```shell
-$ composer require cocur/pli:@stable
+$ composer require cocur/pli
 ```
-
-*__Tip:__ Instead of using `@stable` use a more specific version from the 
-[releases](https://github.com/cocur/pli/releases) page.*
 
 
 Usage
@@ -106,14 +104,16 @@ class BranExtension implements ExtensionInterface
 ```
 
 
-Changelog
----------
+Change Log
+----------
 
-*No public release yet*
+### Version 0.1 (18 May 2015)
+
+- Initial release
 
 
 License
 -------
 
 The MIT license applies to cocur/pli. For the full copyright and license information, please view the
-`LICENSE` file distributed with this source code.
+[`LICENSE`](https://github.com/cocur/pli/blob/master/LICENSE) file distributed with this source code.
