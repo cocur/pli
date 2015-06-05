@@ -22,9 +22,9 @@ interface ExtensionInterface
     public function buildContainer(ContainerBuilder $container, array $config = []);
 
     /**
-     * @param string $configDirectory
+     * @param string[] $configDirectories
      *
      * @return void
      */
-    public function setConfigDirectory($configDirectory);
+    public function setConfigDirectories($configDirectories);
 }

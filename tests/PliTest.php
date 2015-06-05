@@ -33,6 +33,7 @@ class PliTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers Cocur\Pli\Pli::loadConfiguration()
+     * @covers Cocur\Pli\Pli::getConfigFilename()
      */
     public function loadConfigurationShouldLoadConfiguration()
     {
@@ -60,6 +61,30 @@ class PliTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers Cocur\Pli\Pli::loadConfiguration()
+     * @covers Cocur\Pli\Pli::getConfigFilename()
+     */
+    public function loadConfigurationShouldLoadNotConfigurationIfFileDoesNotExist()
+    {
+        $rootNode = m::mock('Symfony\Component\Config\Definition\NodeInterface');
+//        $rootNode->shouldReceive('normalize')->once();
+//        $rootNode->shouldReceive('merge')->once();
+        $rootNode->shouldReceive('finalize')->once()->andReturn([]);
+
+        $treeBuilder = m::mock('Symfony\Component\Config\Definition\Builder\TreeBuilder');
+        $treeBuilder->shouldReceive('buildTree')->once()->andReturn($rootNode);
+
+        /** @var \Symfony\Component\Config\Definition\ConfigurationInterface|\Mockery\MockInterface $configuration */
+        $configuration = m::mock('Symfony\Component\Config\Definition\ConfigurationInterface');
+        $configuration->shouldReceive('getConfigTreeBuilder')->once()->andReturn($treeBuilder);
+
+        $config = $this->pli->loadConfiguration($configuration, ['config.yml']);
+
+        $this->assertSame([], $config);
+    }
+
+    /**
+     * @test
      * @covers Cocur\Pli\Pli::__construct()
      * @covers Cocur\Pli\Pli::buildContainer()
      */
@@ -67,7 +92,7 @@ class PliTest extends PHPUnit_Framework_TestCase
     {
         /** @var \Cocur\Pli\Container\ExtensionInterface|\Mockery\MockInterface $extension */
         $extension = m::mock('Cocur\Pli\Container\ExtensionInterface');
-        $extension->shouldReceive('setConfigDirectory')->with(vfsStream::url('config'))->once();
+        $extension->shouldReceive('setConfigDirectories')->with([vfsStream::url('config')])->once();
         $extension->shouldReceive('buildContainer')->once();
 
         $container = $this->pli->buildContainer($extension, ['foo' => 'bar']);

@@ -29,16 +29,19 @@ use Symfony\Component\Yaml\Yaml;
 class Pli
 {
     /**
-     * @var string
+     * @var string[]
      */
-    private $configDirectory;
+    private $configDirectories;
 
     /**
-     * @param string $configDirectory
+     * @param string|string[] $configDirectories
      */
-    public function __construct($configDirectory)
+    public function __construct($configDirectories)
     {
-        $this->configDirectory = $configDirectory;
+        if (is_string($configDirectories)) {
+            $configDirectories = [$configDirectories];
+        }
+        $this->configDirectories = $configDirectories;
     }
 
     /**
@@ -51,10 +54,12 @@ class Pli
     {
         $rawConfig = [];
         foreach ($configFiles as $configFile) {
-            if (false === file_exists($configFile)) {
-                $configFile = sprintf('%s/%s', $this->configDirectory, $configFile);
+            if (!file_exists($configFile)) {
+                $configFile = $this->getConfigFilename($configFile);
             }
-            $rawConfig[] = Yaml::parse(file_get_contents($configFile));
+            if ($configFile) {
+                $rawConfig[] = Yaml::parse(file_get_contents($configFile));
+            }
         }
 
         return (new Processor())->processConfiguration($configuration, $rawConfig);
@@ -70,7 +75,7 @@ class Pli
     {
         $container = new ContainerBuilder();
         if ($extension !== null) {
-            $extension->setConfigDirectory($this->configDirectory);
+            $extension->setConfigDirectories($this->configDirectories);
             $extension->buildContainer($container, $config);
         }
 
@@ -106,5 +111,22 @@ class Pli
         }
 
         return $application;
+    }
+
+    /**
+     * @param string $configFile
+     *
+     * @return null|string
+     */
+    protected function getConfigFilename($configFile)
+    {
+        foreach ($this->configDirectories as $configDirectory) {
+            $configPathname = sprintf('%s/%s', $configDirectory, $configFile);
+            if (file_exists($configPathname)) {
+                return $configPathname;
+            }
+        }
+
+        return null;
     }
 }
