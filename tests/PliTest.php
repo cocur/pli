@@ -67,8 +67,6 @@ class PliTest extends PHPUnit_Framework_TestCase
     public function loadConfigurationShouldLoadNotConfigurationIfFileDoesNotExist()
     {
         $rootNode = m::mock('Symfony\Component\Config\Definition\NodeInterface');
-//        $rootNode->shouldReceive('normalize')->once();
-//        $rootNode->shouldReceive('merge')->once();
         $rootNode->shouldReceive('finalize')->once()->andReturn([]);
 
         $treeBuilder = m::mock('Symfony\Component\Config\Definition\Builder\TreeBuilder');
@@ -95,9 +93,20 @@ class PliTest extends PHPUnit_Framework_TestCase
         $extension->shouldReceive('setConfigDirectories')->with([vfsStream::url('config')])->once();
         $extension->shouldReceive('buildContainer')->once();
 
-        $container = $this->pli->buildContainer($extension, ['foo' => 'bar']);
+        /** @var \Mockery\MockInterface $pass */
+        $pass = m::mock('Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface');
+        $pass->shouldReceive('process')->once();
+
+        $container = $this->pli->buildContainer(
+            $extension,
+            ['foo' => 'bar'],
+            ['%DIR%' => 'foobar'],
+            [$pass]
+        );
 
         $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerBuilder', $container);
+        $this->assertEquals('foobar', $container->getParameter('%DIR%'));
+        $this->assertCount(16, $container->getCompiler()->getPassConfig()->getPasses());
     }
 
     /**

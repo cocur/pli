@@ -15,6 +15,7 @@ use Cocur\Pli\Container\ExtensionInterface;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Console\Application;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Yaml;
@@ -68,16 +69,29 @@ class Pli
     /**
      * @param ExtensionInterface|null $extension
      * @param array                   $config
+     * @param array                   $parameters
+     * @param CompilerPassInterface   $compilerPasses
      *
      * @return ContainerBuilder
      */
-    public function buildContainer(ExtensionInterface $extension = null, array $config = [])
-    {
+    public function buildContainer(
+        ExtensionInterface $extension = null,
+        array $config = [],
+        array $parameters = [],
+        array $compilerPasses = []
+    ) {
         $container = new ContainerBuilder();
         if ($extension !== null) {
             $extension->setConfigDirectories($this->configDirectories);
             $extension->buildContainer($container, $config);
         }
+        foreach ($parameters as $key => $value) {
+            $container->setParameter($key, $value);
+        }
+        foreach ($compilerPasses as $compilerPass) {
+            $container->addCompilerPass($compilerPass);
+        }
+        $container->compile();
 
         return $container;
     }
