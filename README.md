@@ -107,6 +107,10 @@ class BranExtension implements ExtensionInterface
 Change Log
 ----------
 
+### Version 0.1.2 (5 June 2015)
+
+- Add parameters and compiler passes to container
+
 ### Version 0.1.1 (5 June 2015)
 
 - Add support for multiple configuration directories
