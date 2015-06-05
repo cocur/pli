@@ -26,5 +26,5 @@ interface ExtensionInterface
      *
      * @return void
      */
-    public function setConfigDirectories($configDirectories);
+    public function setConfigDirectories(array $configDirectories);
 }

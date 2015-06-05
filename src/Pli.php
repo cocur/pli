@@ -70,7 +70,7 @@ class Pli
      * @param ExtensionInterface|null $extension
      * @param array                   $config
      * @param array                   $parameters
-     * @param CompilerPassInterface   $compilerPasses
+     * @param CompilerPassInterface[] $compilerPasses
      *
      * @return ContainerBuilder
      */
