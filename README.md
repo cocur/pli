@@ -75,7 +75,7 @@ class BranConfiguration implements ConfigurationInterface
 
 Pli also needs an extension that is used to build the container. You can set parameters, dynamically create
 service definitions and so on. If you want to store your service configuration in a Yaml file you can use the
- `configDirectory` property to retrieve the path to the config directory.
+ `configDirectories` property to retrieve the path to the config directory.
 
 ```php
 // src/AcmeExtension.php
@@ -88,17 +88,17 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class BranExtension implements ExtensionInterface
 {
-    private $configDirectory;
+    private $configDirectories;
 
     public function buildContainer(ContainerBuilder $container, array $config = [])
     {
-        $loader = new YamlFileLoader($container, new FileLocator($this->configDirectory));
+        $loader = new YamlFileLoader($container, new FileLocator($this->configDirectories));
         $loader->load('services.yml');
     }
 
-    public function setConfigDirectory($configDirectory)
+    public function setConfigDirectories(array $configDirectories)
     {
-        $this->configDirectory = $configDirectory;
+        $this->configDirectories = $configDirectories;
     }
 }
 ```
@@ -106,6 +106,10 @@ class BranExtension implements ExtensionInterface
 
 Change Log
 ----------
+
+### Version 0.1.1 (5 June 2015)
+
+- Add support for multiple configuration directories
 
 ### Version 0.1 (18 May 2015)
 
